@@ -18,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
 
   submission.addSubmissions = (formId, submissions) => {
     const fields = Object.keys(submissions);
-    return fields.map(field => submission.create({
+    return Promise.all(fields.map(field => submission.create({
       formId,
       field,
       response: submissions[field],
-    }));
+    })));
   };
   return submission;
 };

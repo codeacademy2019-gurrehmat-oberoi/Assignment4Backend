@@ -32,7 +32,7 @@ describe('addSubmissions()', () => {
   });
   it('should add provided submissions to table', async (done) => {
     const sampleForm = await makeForm();
-    await Promise.all(models.submission.addSubmissions(sampleForm[0].id, input));
+    await models.submission.addSubmissions(sampleForm[0].id, input);
     expect(await models.submission.count()).toEqual(2);
     done();
     // expect(sampleForm).toEqual(1);
@@ -51,8 +51,8 @@ describe('getSubmissionByFormId()', () => {
   });
   it('should get all submissions of formId provided', async (done) => {
     const forms = [await makeForm(), await makeSecondForm()];
-    await Promise.all(models.submission.addSubmissions(forms[0][0].id, input));
-    await Promise.all(models.submission.addSubmissions(forms[1][0].id, { Name: 'Jane Doe' }));
+    await models.submission.addSubmissions(forms[0][0].id, input);
+    await models.submission.addSubmissions(forms[1][0].id, { Name: 'Jane Doe' });
     const results = [
       await models.submission.getSubmissionsByFormId(forms[0][0].id),
       await models.submission.getSubmissionsByFormId(forms[1][0].id),
