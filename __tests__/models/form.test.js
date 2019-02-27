@@ -23,19 +23,22 @@ describe('addForm()', () => {
   afterEach(async () => {
     await models.form.truncate();
   });
-  it('should add a row in form table', async () => {
+  it('should add a row in form table', async (done) => {
     await models.form.addForm(input);
     expect(await models.form.count()).toEqual(1);
+    done();
   });
-  it('should add new row to table corresponding to given input', async () => {
+  it('should add new row to table corresponding to given input', async (done) => {
     await models.form.addForm(input);
     const response = await models.form.findOne();
     expect(response.dataValues).toMatchObject(input);
+    done();
   });
-  it('should not add form if matching form exists', async () => {
+  it('should not add form if matching form exists', async (done) => {
     await models.form.addForm(input);
     await models.form.addForm(input);
     expect(await models.form.count()).toEqual(1);
+    done();
   });
 });
 
@@ -46,13 +49,14 @@ describe('getAllForms()', () => {
   afterEach(async () => {
     await models.form.truncate();
   });
-  it('should fetch all the forms entered', async () => {
+  it('should fetch all the forms entered', async (done) => {
     await models.form.addForm(input);
     await models.form.addForm(input2);
     const response = await models.form.getAllForms();
     expect(response.length).toEqual(2);
     expect(response[0]).toMatchObject(input);
     expect(response[1]).toMatchObject(input2);
+    done();
   });
 });
 
@@ -63,13 +67,14 @@ describe('getFormById()', () => {
   afterEach(async () => {
     await models.form.truncate();
   });
-  it('should return form matching given id', async () => {
+  it('should return form matching given id', async (done) => {
     const responses = [await models.form.addForm(input), await models.form.addForm(input2)];
     const ids = [responses[0][0].id, responses[1][0].id];
     const res = [await models.form.getFormById(ids[0]), await models.form.getFormById(ids[1])];
     expect(res[0]).toEqual(responses[0][0].dataValues);
     expect(res[1]).toEqual(responses[1][0].dataValues);
+    done();
   });
 });
 
-afterAll(() => models.sequelize.close());
+// afterAll(() => models.sequelize.close());
