@@ -62,3 +62,7 @@ describe('getSubmissionByFormId()', () => {
     done();
   });
 });
+
+afterAll(async () => {
+  await models.sequelize.close();
+});

@@ -77,4 +77,4 @@ describe('getFormById()', () => {
   });
 });
 
-// afterAll(() => models.sequelize.close());
+afterAll(() => models.sequelize.close());
